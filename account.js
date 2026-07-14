@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Navigation ---
     btnBack.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = 'map.html';
     });
 
     // --- Profile Management ---
