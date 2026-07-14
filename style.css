@@ -991,6 +991,11 @@ input:checked + .slider:before { transform: translateX(24px); }
     border: none;
     color: var(--text-secondary);
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.map-controls-top-right.collapsed .toggle-btn {
+    transform: rotate(180deg);
 }
 
 .panel-content {
@@ -998,6 +1003,16 @@ input:checked + .slider:before { transform: translateX(24px); }
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    transition: all 0.3s ease;
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.panel-content.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
 }
 
 .style-switcher {
