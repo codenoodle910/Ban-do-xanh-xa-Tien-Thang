@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Tài khoản - Green Map</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="account-container" class="account-container">
+        <!-- Header -->
+        <header class="account-header glass-panel">
+            <button id="btn-back" class="btn-icon" title="Quay lại Bản đồ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <h1>Quản lý Tài khoản</h1>
+            <div style="width: 24px;"></div> <!-- Spacer for flexbox centering -->
+        </header>
+
+        <!-- Main Content -->
+        <main class="account-main">
+            <!-- Profile Section -->
+            <section class="profile-card glass-panel">
+                <div class="profile-avatar-container">
+                    <img id="profile-avatar" src="https://via.placeholder.com/100?text=Avatar" alt="Avatar" class="avatar-img">
+                    <label for="avatar-upload" class="avatar-edit-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    </label>
+                    <input type="file" id="avatar-upload" accept="image/*" class="hidden">
+                </div>
+                
+                <div class="form-group">
+                    <label for="profile-name">Họ và Tên</label>
+                    <input type="text" id="profile-name" class="form-input" placeholder="Nhập họ và tên...">
+                </div>
+                <div class="form-group">
+                    <label for="profile-phone">Số điện thoại / Email</label>
+                    <input type="text" id="profile-phone" class="form-input" placeholder="Nhập số điện thoại...">
+                </div>
+                
+                <button id="btn-save-profile" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Lưu Thay Đổi</button>
+            </section>
+
+            <!-- My Reports Section -->
+            <section class="my-reports-section">
+                <h2>Báo cáo của tôi</h2>
+                <div id="reports-list" class="reports-list">
+                    <!-- Reports will be injected here via JS -->
+                    <p class="empty-state">Đang tải báo cáo...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-overlay hidden">
+        <button id="lightbox-close" class="lightbox-close">&times;</button>
+        <button id="lightbox-prev" class="lightbox-nav lightbox-prev">&#10094;</button>
+        <img id="lightbox-img" src="" alt="Full size">
+        <button id="lightbox-next" class="lightbox-nav lightbox-next">&#10095;</button>
+        <div id="lightbox-counter" class="lightbox-counter">1 / 1</div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="account.js"></script>
+</body>
+</html>
