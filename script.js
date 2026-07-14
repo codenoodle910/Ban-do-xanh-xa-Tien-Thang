@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Auth State ---
+    const currentUser = localStorage.getItem('currentUser');
+    
     // 1. Initialize Mapbox
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGllcDE5MDUiLCJhIjoiY21yajlqd2Z6MDVpYzM1cTJyd2dlajllNiJ9.xMlOUBFZDiwWQcpRx1d25Q';
     
@@ -328,6 +331,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let tempRouteFeature = null;
 
     const roleToggle = document.getElementById('role-toggle');
+    const roleSwitcherPanel = document.getElementById('role-switcher');
+    
+    // Only show admin switch if user is admin
+    if (currentUser === 'admin' && roleSwitcherPanel) {
+        roleSwitcherPanel.style.display = 'flex';
+    }
+
     const roleLabelUser = document.getElementById('role-label-user');
     const roleLabelAdmin = document.getElementById('role-label-admin');
     const roadColorPicker = document.getElementById('road-color-picker');
@@ -746,6 +756,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openReportModal() {
+        if (!currentUser) {
+            alert('Bạn cần đăng nhập để gửi báo cáo sự cố!');
+            window.location.href = 'login.html';
+            return;
+        }
+        
         reportModal.classList.remove('hidden');
         resetReportForm();
         

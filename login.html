@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Green Map Tiến Thắng</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-body {
+            background-color: var(--bg-main);
+            background-image: url('hero_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--bg-main);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .login-footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-credentials {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .demo-credentials p { margin: 0 0 0.5rem 0; font-weight: 600; color: var(--primary); }
+        .demo-credentials ul { margin: 0; padding-left: 1.5rem; }
+        .demo-credentials li { margin-bottom: 0.25rem; }
+    </style>
+</head>
+<body class="login-body">
+    <div class="login-card">
+        <div class="login-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Green Map</span>
+        </div>
+        
+        <h1 class="login-title">Chào mừng trở lại!</h1>
+        <p class="login-subtitle">Đăng nhập để tiếp tục đóng góp làm đẹp cho quê hương Tiến Thắng</p>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="username">Tên đăng nhập</label>
+                <input type="text" id="username" class="form-input" placeholder="Nhập tên đăng nhập của bạn" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">Mật khẩu</label>
+                <input type="password" id="password" class="form-input" placeholder="Nhập mật khẩu" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-login">Đăng nhập ngay</button>
+        </form>
+
+        <div class="demo-credentials">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Thông tin Test (Mock Login):</p>
+            <ul>
+                <li><strong>Admin:</strong> admin / admin (Có quyền vẽ đường)</li>
+                <li><strong>Người dân:</strong> Nhập tên bất kỳ (Ví dụ: nguoidan / 123)</li>
+            </ul>
+        </div>
+
+        <div class="login-footer">
+            <a href="index.html">← Quay lại Trang Chủ</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            
+            if (username) {
+                // Save login state
+                localStorage.setItem('currentUser', username);
+                
+                // Also set basic profile if it doesn't exist
+                let profile = JSON.parse(localStorage.getItem('userProfile'));
+                if (!profile) {
+                    profile = {
+                        name: username === 'admin' ? 'Ban Quản Trị' : 'Công dân Xanh',
+                        phone: '',
+                        email: '',
+                        avatar: 'ava.jpg'
+                    };
+                    localStorage.setItem('userProfile', JSON.stringify(profile));
+                }
+
+                // Redirect to map
+                window.location.href = 'map.html';
+            }
+        });
+    </script>
+</body>
+</html>

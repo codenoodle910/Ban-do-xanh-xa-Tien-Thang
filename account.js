@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Auth Check ---
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+    }
+
     // --- Elements ---
     const sidebarAvatar = document.getElementById('sidebarAvatar');
     const sidebarName = document.getElementById('sidebarName');
@@ -87,6 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
     headerBack.addEventListener('click', () => {
         window.location.href = 'map.html';
     });
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        });
+    }
 
     // Mobile Menu Toggle
     mobileMenuBtn.addEventListener('click', () => {
