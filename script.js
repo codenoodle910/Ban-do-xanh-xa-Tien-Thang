@@ -279,6 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCancelReport = document.getElementById('btn-cancel-report');
     const btnSubmitReport = document.getElementById('btn-submit-report');
     const locationStatus = document.getElementById('location-status');
+    const btnPickLocation = document.getElementById('btn-pick-location');
+    const locationPickerCrosshair = document.getElementById('location-picker-crosshair');
+    const locationPickerPanel = document.getElementById('location-picker-panel');
+    const btnConfirmLocation = document.getElementById('btn-confirm-location');
     const imageUploadArea = document.getElementById('image-upload-area');
     const reportImage = document.getElementById('report-image');
     const imagePreviewContainer = document.getElementById('image-preview-container');
@@ -294,6 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxCounter = document.getElementById('lightbox-counter');
 
     let currentReportLocation = null;
+    let userGPSLocation = null;
+    let isPickingLocation = false;
     let currentReportImages = [];
     
     // --- Data Persistence ---
@@ -755,6 +761,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Haversine formula to calculate distance in km
+    function calculateDistance(lon1, lat1, lon2, lat2) {
+        const R = 6371; // Earth radius in km
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+    }
+
     function openReportModal() {
         if (!currentUser) {
             alert('Bạn cần đăng nhập để gửi báo cáo sự cố!');
@@ -777,9 +795,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    currentReportLocation = [position.coords.longitude, position.coords.latitude];
+                    userGPSLocation = [position.coords.longitude, position.coords.latitude];
+                    currentReportLocation = [...userGPSLocation];
                     locationStatus.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Đã lấy vị trí thành công`;
                     locationStatus.className = 'location-status success';
+                    if(btnPickLocation) btnPickLocation.disabled = false;
                     checkSubmitReady();
                 },
                 (error) => {
@@ -834,6 +854,35 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCloseModal.addEventListener('click', closeReportModal);
     btnCancelReport.addEventListener('click', closeReportModal);
 
+    // Location Picker Logic
+    if(btnPickLocation) {
+        btnPickLocation.addEventListener('click', () => {
+            isPickingLocation = true;
+            reportModal.classList.add('hidden');
+            locationPickerCrosshair.classList.remove('hidden');
+            locationPickerPanel.classList.remove('hidden');
+            if(currentReportLocation) {
+                map.flyTo({ center: currentReportLocation, zoom: 16 });
+            }
+        });
+    }
+
+    if(btnConfirmLocation) {
+        btnConfirmLocation.addEventListener('click', () => {
+            isPickingLocation = false;
+            const center = map.getCenter();
+            currentReportLocation = [center.lng, center.lat];
+            
+            locationPickerCrosshair.classList.add('hidden');
+            locationPickerPanel.classList.add('hidden');
+            reportModal.classList.remove('hidden');
+            
+            locationStatus.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Đã chọn vị trí thủ công`;
+            locationStatus.className = 'location-status success';
+            checkSubmitReady();
+        });
+    }
+
     // Image Upload
     imageUploadArea.addEventListener('click', () => {
         reportImage.click();
@@ -863,6 +912,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Submit Report
     btnSubmitReport.addEventListener('click', () => {
         if (!currentReportLocation || currentReportImages.length === 0) return;
+
+        // Check 1km radius limit
+        if (userGPSLocation) {
+            const distance = calculateDistance(
+                userGPSLocation[0], userGPSLocation[1],
+                currentReportLocation[0], currentReportLocation[1]
+            );
+            if (distance > 1) {
+                alert(`Vị trí báo cáo quá xa (cách bạn ${distance.toFixed(2)}km). Vui lòng chỉ báo cáo sự cố trong vòng bán kính 1km quanh bạn!`);
+                return;
+            }
+        } else {
+            alert('Lỗi: Không xác định được vị trí GPS thật của bạn. Bạn phải bật định vị để gửi báo cáo.');
+            return;
+        }
 
         const descText = reportDesc.value.trim() || 'Không có mô tả';
         const now = new Date();

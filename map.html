@@ -25,6 +25,15 @@
         <main class="map-wrapper" id="map-wrapper">
             <div id="map"></div>
             
+            <!-- Location Picker UI (Hidden by default) -->
+            <div id="location-picker-crosshair" class="hidden" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%); z-index: 10; pointer-events: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="var(--primary)" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"></path><circle cx="12" cy="10" r="3" fill="white"></circle></svg>
+            </div>
+            <div id="location-picker-panel" class="hidden" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; background: rgba(255,255,255,0.95); padding: 1rem 1.5rem; border-radius: 100px; box-shadow: var(--shadow-xl); display: flex; align-items: center; gap: 1rem; backdrop-filter: blur(10px);">
+                <span style="font-weight: 600; font-size: 0.95rem;">Kéo bản đồ để chọn vị trí</span>
+                <button id="btn-confirm-location" class="btn btn-primary" style="padding: 0.5rem 1.5rem; border-radius: 100px;">Xác nhận</button>
+            </div>
+            
             <!-- Role Switcher -->
             <div class="role-switcher" id="role-switcher" style="display: none;">
                 <span id="role-label-user" class="role-label user active">Người dân</span>
@@ -138,8 +147,13 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="location-status" id="location-status">
-                            <span class="spinner-small"></span> Đang lấy vị trí hiện tại...
+                        <div class="location-status-container" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div class="location-status" id="location-status" style="margin-bottom: 0;">
+                                <span class="spinner-small"></span> Đang lấy vị trí hiện tại...
+                            </div>
+                            <button id="btn-pick-location" class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.85rem;" disabled>
+                                📍 Chọn vị trí
+                            </button>
                         </div>
                         <div class="form-group">
                             <label>Hình ảnh sự cố</label>
