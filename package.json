@@ -1,0 +1,13 @@
+{
+  "name": "green-map-tien-thang",
+  "version": "1.0.0",
+  "description": "Bản đồ xã Tiến Thắng, Hà Nội",
+  "main": "script.js",
+  "scripts": {
+    "start": "serve . -p 3000",
+    "dev": "serve . -p 3000"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}
