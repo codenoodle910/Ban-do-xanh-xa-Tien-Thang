@@ -178,6 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. UI Interactions & Controls
     
+    // Panel Toggle functionality
+    const panelToggle = document.getElementById('panel-toggle');
+    const panelContent = document.getElementById('panel-content');
+    const mapControlsPanel = document.getElementById('map-controls-panel');
+    
+    panelToggle.addEventListener('click', () => {
+        panelContent.classList.toggle('collapsed');
+        mapControlsPanel.classList.toggle('collapsed');
+    });
+
     // ─── Sidebar Open / Close ─────────────────────────────
     const sidebar = document.getElementById('sidebar');
     const btnOpenSidebar = document.getElementById('btn-open-sidebar');
@@ -216,6 +226,31 @@ document.addEventListener('DOMContentLoaded', () => {
             btnOpenSidebar.style.display = 'none';
             backdrop.style.display = 'none';
             backdrop.classList.remove('visible');
+        }
+    });
+
+    // Style switcher buttons
+    const styleBtns = document.querySelectorAll('.style-btn');
+    styleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Remove active class from all
+            styleBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            const clickedBtn = e.currentTarget;
+            clickedBtn.classList.add('active');
+            
+            // Set map style
+            const nextStyle = clickedBtn.getAttribute('data-style');
+            map.setStyle(nextStyle);
+        });
+    });
+
+    // Boundary visibility checkbox
+    const toggleBoundary = document.getElementById('toggle-boundary');
+    toggleBoundary.addEventListener('change', (e) => {
+        boundaryVisible = e.target.checked;
+        if (map.getLayer('boundary-layer')) {
+            map.setLayoutProperty('boundary-layer', 'visibility', boundaryVisible ? 'visible' : 'none');
         }
     });
 
