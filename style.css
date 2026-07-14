@@ -1060,38 +1060,10 @@ input:checked + .slider:before {
 
 /* ─── Responsive: Mobile (max 768px) ─────────────────────── */
 @media (max-width: 768px) {
-    /* Sidebar slides in from left as overlay */
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 85vw;
-        max-width: 320px;
-        height: 100%;
-        z-index: 1000;
-        transform: translateX(0);
-        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .sidebar.sidebar-hidden {
-        transform: translateX(-105%);
-    }
-
-    /* Map fills the full screen */
-    .map-wrapper {
-        margin-left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-    }
-
-    /* Show hamburger button */
-    .btn-open-sidebar {
-        display: flex;
-    }
-
-    /* Role switcher: tuck below hamburger */
+    /* Role switcher: tuck top left */
     .role-switcher {
         top: 1rem;
-        left: 60px; /* Avoid overlapping hamburger */
+        left: 1rem;
         padding: 0.4rem 0.8rem;
         gap: 0.5rem;
         font-size: 0.8rem;
@@ -1111,9 +1083,9 @@ input:checked + .slider:before {
         text-align: center;
     }
 
-    /* Dashboard panel (top right): smaller & lower */
+    /* Dashboard panel (top right): smaller & lower if needed */
     .map-controls-top-right {
-        top: 1rem;
+        top: 4.5rem; /* Moved lower to avoid overlapping with role switcher if screen is very narrow */
         right: 1rem;
         min-width: 200px;
         max-width: calc(100vw - 2rem);
@@ -1163,13 +1135,6 @@ input:checked + .slider:before {
 
 /* ─── Responsive: Tablet (769px – 1024px) ────────────────── */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .sidebar {
-        width: 300px;
-    }
-    .map-wrapper {
-        margin-left: 300px;
-        width: calc(100vw - 300px);
-    }
     .map-controls-top-right {
         min-width: 220px;
     }
