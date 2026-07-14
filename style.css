@@ -47,11 +47,16 @@
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Be Vietnam Pro', sans-serif;
     background-color: var(--bg-subtle);
     color: var(--text-primary);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Force Mapbox to use the custom font */
+.mapboxgl-popup, .mapboxgl-ctrl, .mapboxgl-map {
+    font-family: 'Be Vietnam Pro', sans-serif !important;
 }
 
 /* ==========================================================================
@@ -1260,3 +1265,4 @@ textarea:focus { outline: none; border-color: var(--primary); }
     .report-panel { width: 100%; left: 0; top: 100%; height: 70vh; border-radius: 24px 24px 0 0; }
     .report-panel.active { top: 30%; left: 0; }
 }
+
