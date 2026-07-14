@@ -3,100 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Chủ - Xã Tiến Thắng Xanh Sạch Đẹp</title>
+    <title>Xã Tiến Thắng - Bản Đồ Xanh Sạch Đẹp</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="landing-body">
-    <!-- Navbar -->
-    <nav class="landing-nav glass-panel">
+
+    <!-- Navigation -->
+    <nav class="landing-nav">
         <div class="nav-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>GreenMap Tiến Thắng</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Green Map Tiến Thắng</span>
         </div>
         <div class="nav-links">
-            <a href="account.html" class="nav-btn btn-account">
+            <a href="account.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 Tài khoản
             </a>
-            <a href="map.html" class="nav-btn btn-primary">Mở Bản Đồ</a>
+            <a href="map.html" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">Khám phá ngay</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero-section" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.9)), url('hero_bg.png');">
+    <section class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-title">Chung tay xây dựng<br><span class="text-gradient">Tiến Thắng Xanh - Sạch - Đẹp</span></h1>
-            <p class="hero-subtitle">Nền tảng bản đồ số cộng đồng, nơi người dân cùng nhau phản ánh sự cố môi trường và vinh danh những tuyến đường kiểu mẫu tại Xã Tiến Thắng, Huyện Mê Linh.</p>
-            <div class="hero-cta">
-                <a href="map.html" class="btn btn-primary btn-large">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
-                    Mở Bản Đồ Khám Phá
-                </a>
-            </div>
+            <h1 class="hero-title">
+                Xây dựng môi trường <br />
+                <span class="text-gradient">Xanh - Sạch - Đẹp</span>
+            </h1>
+            <p class="hero-subtitle">
+                Cùng nhau đánh dấu, báo cáo và tôn vinh những tuyến đường tuyệt đẹp tại xã Tiến Thắng. Một hành động nhỏ của bạn hôm nay, mang lại không gian sống trong lành cho ngày mai.
+            </p>
             
-            <div class="hero-stats glass-panel">
+            <a href="map.html" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">
+                Mở Bản Đồ Báo Cáo
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+
+            <!-- Stats -->
+            <div class="hero-stats">
                 <div class="stat-item">
-                    <span class="stat-number">15+</span>
+                    <span class="stat-number">12+</span>
                     <span class="stat-label">Tuyến đường xanh</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <span class="stat-number">100+</span>
+                    <span class="stat-number">45</span>
                     <span class="stat-label">Báo cáo xử lý</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">Người dân tham gia</span>
+                    <span class="stat-number">800+</span>
+                    <span class="stat-label">Người tham gia</span>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
     <!-- Features Section -->
     <section class="features-section">
         <div class="features-header">
-            <h2>Cách Thức Hoạt Động</h2>
-            <p>Quy trình 3 bước đơn giản để cùng nhau cải thiện môi trường sống.</p>
+            <h2>Tính năng nổi bật</h2>
+            <p>Hệ thống công nghệ giúp mọi người dân dễ dàng đóng góp cho cộng đồng.</p>
         </div>
         
         <div class="features-grid">
-            <div class="feature-card glass-panel">
+            <div class="feature-card">
                 <div class="feature-icon icon-blue">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
-                <h3>1. Chụp ảnh & Báo cáo</h3>
-                <p>Gặp điểm tập kết rác sai quy định? Chỉ cần 1 chạm để chụp ảnh và ghim vị trí sự cố lên bản đồ chung.</p>
+                <h3>Bản đồ Tương tác</h3>
+                <p>Khám phá toàn cảnh xã Tiến Thắng qua bản đồ trực quan. Xem các điểm xanh, sạch đã được ghi nhận.</p>
             </div>
             
-            <div class="feature-card glass-panel">
+            <div class="feature-card">
                 <div class="feature-icon icon-yellow">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
                 </div>
-                <h3>2. Cán bộ Xử lý</h3>
-                <p>Đội ngũ vệ sinh tiếp nhận thông tin từ cộng đồng, tiến hành dọn dẹp và cập nhật trạng thái hoàn thành.</p>
+                <h3>Báo cáo Tức thì</h3>
+                <p>Phát hiện rác thải hay điểm ô nhiễm? Chụp ảnh và gửi báo cáo ngay lập tức để cơ quan chức năng xử lý.</p>
             </div>
             
-            <div class="feature-card glass-panel">
+            <div class="feature-card">
                 <div class="feature-icon icon-green">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
                 </div>
-                <h3>3. Tôn vinh Tuyến đường</h3>
-                <p>Các đoạn đường đã sạch đẹp sẽ được đánh giá và tô dải màu xanh rực rỡ để mọi người cùng chiêm ngưỡng.</p>
+                <h3>Bảo mật Dữ liệu</h3>
+                <p>Mọi thông tin tài khoản và báo cáo của bạn đều được lưu trữ an toàn trong trình duyệt cục bộ.</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="landing-footer glass-panel">
-        <p>Green Map Vietnam © 2026. Xây dựng cho Xã Tiến Thắng, Huyện Mê Linh.</p>
+    <footer class="landing-footer">
+        <p>&copy; 2026 Dự án Xã Tiến Thắng Xanh - Sạch - Đẹp. Phát triển vì một cộng đồng bền vững.</p>
     </footer>
+
 </body>
 </html>
