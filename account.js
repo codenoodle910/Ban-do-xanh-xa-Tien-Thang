@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="doc-actions">
                     <span style="font-size: 0.8rem; color: #888;">${date}</span>
-                    <button class="btn-pill btn-destructive" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="deleteReport(${report.id})">Xóa</button>
+                    <button class="btn-pill btn-destructive" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="deleteReport('${report.id}')">Xóa</button>
                 </div>
             `;
             reportsList.appendChild(card);
