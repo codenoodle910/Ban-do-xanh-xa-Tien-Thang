@@ -293,17 +293,34 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentReportLocation = null;
     let currentReportImages = [];
     
-    // Arrays to store reports
-    let reports = [];
+    // --- Data Persistence ---
+    let reportsData = JSON.parse(localStorage.getItem('reports')) || [];
+    let reports = []; // Will be populated with map markers later
     let editingReportId = null;
     
     let currentLightboxImages = [];
     let currentLightboxIndex = 0;
 
+    function saveReportsToStorage() {
+        const dataToSave = reports.map(r => ({
+            id: r.id,
+            location: r.location,
+            desc: r.desc,
+            images: r.images,
+            status: r.status,
+            date: r.date
+        }));
+        localStorage.setItem('reports', JSON.stringify(dataToSave));
+    }
+
     // --- Admin Road Coloring State ---
     let currentRole = 'USER'; // 'USER' or 'ADMIN'
-    let adminColoredRoads = []; // Array of GeoJSON Features
+    let adminColoredRoads = JSON.parse(localStorage.getItem('adminRoads')) || []; // Array of GeoJSON Features
     let selectedRoadFeature = null;
+    
+    function saveAdminRoadsToStorage() {
+        localStorage.setItem('adminRoads', JSON.stringify(adminColoredRoads));
+    }
     
     let adminState = 'IDLE'; // 'IDLE', 'SELECT_B', 'CHOOSE_COLOR'
     let adminMarkerA = null;
@@ -367,6 +384,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    function initReportsFromStorage() {
+        reportsData.forEach(r => {
+            const el = document.createElement('div');
+            el.className = 'custom-marker';
+            const svgIcon = `
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 7 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8z" fill="var(--danger)"/>
+                    <circle cx="12" cy="8" r="3" fill="white"/>
+                </svg>`;
+            el.innerHTML = svgIcon;
+            
+            const popupHtml = renderPopupContent(r);
+            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupHtml);
+            
+            r.marker = new mapboxgl.Marker({ element: el, draggable: true })
+                .setLngLat(r.location)
+                .setPopup(popup)
+                .addTo(map);
+                
+            r.marker.on('dragend', () => {
+                const lngLat = r.marker.getLngLat();
+                r.location = [lngLat.lng, lngLat.lat];
+                saveReportsToStorage();
+            });
+            
+            reports.push(r);
+        });
+    }
+
+    map.on('load', () => {
+        initReportsFromStorage();
+    });
 
     function initAdminRoads() {
         if (!map.getSource('admin-colored-roads')) {
@@ -519,6 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     features: adminColoredRoads
                 });
             }
+            saveAdminRoadsToStorage();
             
             resetAdminState();
         });
@@ -537,6 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     features: adminColoredRoads
                 });
             }
+            saveAdminRoadsToStorage();
             
             resetAdminState();
         });
@@ -661,6 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reports[index].marker.remove();
             // Remove from array
             reports.splice(index, 1);
+            saveReportsToStorage();
         }
     };
 
@@ -840,9 +893,11 @@ document.addEventListener('DOMContentLoaded', () => {
             newReport.marker.on('dragend', () => {
                 const lngLat = newReport.marker.getLngLat();
                 newReport.location = [lngLat.lng, lngLat.lat];
+                saveReportsToStorage();
             });
                 
             reports.push(newReport);
+            saveReportsToStorage();
             
             map.flyTo({
                 center: currentReportLocation,
