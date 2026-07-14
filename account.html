@@ -3,72 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý Tài khoản - Green Map</title>
+    <title>Dashboard - Quản lý tài khoản</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div id="account-container" class="account-container">
-        <!-- Header -->
-        <header class="account-header glass-panel">
-            <button id="btn-back" class="btn-icon" title="Quay lại Bản đồ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-user">
+            <img src="https://via.placeholder.com/150" alt="Avatar" class="sidebar-avatar" id="sidebarAvatar">
+            <div class="sidebar-user-info">
+                <h3 id="sidebarName">Công dân Xanh</h3>
+                <p>Tiến Thắng, Mê Linh</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
-            <h1>Quản lý Tài khoản</h1>
-            <div style="width: 24px;"></div> <!-- Spacer for flexbox centering -->
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+            <button class="nav-item active" data-target="tab-profile">
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Hồ sơ cá nhân
+            </button>
+            <button class="nav-item" data-target="tab-reports">
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Lịch sử Báo cáo
+            </button>
+            <div class="nav-divider"></div>
+            <button class="nav-item" id="btnBack">
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Quay lại Bản đồ
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="breadcrumb">
+                <span class="back-text" id="headerBack">&larr; Quay lại</span>
+                <span class="next-text">Chi tiết &rarr;</span>
+            </div>
         </header>
 
-        <!-- Main Content -->
-        <main class="account-main">
-            <!-- Profile Section -->
-            <section class="profile-card glass-panel">
-                <div class="profile-avatar-container">
-                    <img id="profile-avatar" src="https://via.placeholder.com/100?text=Avatar" alt="Avatar" class="avatar-img">
-                    <label for="avatar-upload" class="avatar-edit-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                    </label>
-                    <input type="file" id="avatar-upload" accept="image/*" class="hidden">
-                </div>
+        <!-- Tab: Hồ sơ cá nhân -->
+        <section class="content-card active-tab" id="tab-profile">
+            <div class="card-grid">
                 
-                <div class="form-group">
-                    <label for="profile-name">Họ và Tên</label>
-                    <input type="text" id="profile-name" class="form-input" placeholder="Nhập họ và tên...">
+                <!-- Cột trái: Ảnh đại diện -->
+                <div class="profile-photo-col">
+                    <h2 class="section-title">Ảnh đại diện</h2>
+                    <div class="avatar-large-container">
+                        <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar-large" id="profileAvatar">
+                        <input type="file" id="avatarInput" accept="image/*" hidden>
+                        <button class="btn-upload" id="btnUploadAvatar">Đổi ảnh</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="profile-phone">Số điện thoại / Email</label>
-                    <input type="text" id="profile-phone" class="form-input" placeholder="Nhập số điện thoại...">
-                </div>
-                
-                <button id="btn-save-profile" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Lưu Thay Đổi</button>
-            </section>
 
-            <!-- My Reports Section -->
-            <section class="my-reports-section">
-                <h2>Báo cáo của tôi</h2>
-                <div id="reports-list" class="reports-list">
-                    <!-- Reports will be injected here via JS -->
-                    <p class="empty-state">Đang tải báo cáo...</p>
+                <!-- Cột giữa & phải: Thông tin chi tiết -->
+                <div class="profile-details-col">
+                    <div class="details-header">
+                        <h2 class="section-title">Personal Details</h2>
+                        <button class="btn-pill btn-primary" id="btnSaveProfile">Lưu thay đổi</button>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Họ và Tên</label>
+                            <input type="text" id="inputName" class="form-input" placeholder="Nhập họ tên...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="tel" id="inputPhone" class="form-input" placeholder="Nhập số điện thoại...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="inputEmail" class="form-input" placeholder="Nhập email...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Vai trò</label>
+                            <div class="tier-indicator">
+                                <span class="tier-dot active"></span> Công dân
+                                <span class="badge">Current</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
-        </main>
+
+            </div>
+        </section>
+
+        <!-- Tab: Lịch sử báo cáo -->
+        <section class="content-card hidden-tab" id="tab-reports">
+            <h2 class="section-title" style="margin-bottom: 1.5rem;">Submitted Reports</h2>
+            
+            <div class="reports-grid" id="reportsList">
+                <!-- Javascript will render report cards here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox cho ảnh -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img class="lightbox-content" id="lightboxImg">
     </div>
 
-    <!-- Lightbox Modal -->
-    <div id="lightbox-modal" class="lightbox-overlay hidden">
-        <button id="lightbox-close" class="lightbox-close">&times;</button>
-        <button id="lightbox-prev" class="lightbox-nav lightbox-prev">&#10094;</button>
-        <img id="lightbox-img" src="" alt="Full size">
-        <button id="lightbox-next" class="lightbox-nav lightbox-next">&#10095;</button>
-        <div id="lightbox-counter" class="lightbox-counter">1 / 1</div>
-    </div>
-
-    <!-- Custom JS -->
     <script src="account.js"></script>
 </body>
 </html>

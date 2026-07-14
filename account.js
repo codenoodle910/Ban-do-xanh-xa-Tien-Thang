@@ -1,206 +1,194 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Elements
-    const btnBack = document.getElementById('btn-back');
-    const inputName = document.getElementById('profile-name');
-    const inputPhone = document.getElementById('profile-phone');
-    const imgAvatar = document.getElementById('profile-avatar');
-    const uploadAvatar = document.getElementById('avatar-upload');
-    const btnSave = document.getElementById('btn-save-profile');
-    const reportsList = document.getElementById('reports-list');
+    // --- Elements ---
+    const sidebarAvatar = document.getElementById('sidebarAvatar');
+    const sidebarName = document.getElementById('sidebarName');
     
-    // Lightbox elements
-    const lightboxModal = document.getElementById('lightbox-modal');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = document.getElementById('lightbox-close');
-    const lightboxPrev = document.getElementById('lightbox-prev');
-    const lightboxNext = document.getElementById('lightbox-next');
-    const lightboxCounter = document.getElementById('lightbox-counter');
+    const profileAvatar = document.getElementById('profileAvatar');
+    const avatarInput = document.getElementById('avatarInput');
+    const btnUploadAvatar = document.getElementById('btnUploadAvatar');
     
-    let currentLightboxImages = [];
-    let currentImageIndex = 0;
+    const inputName = document.getElementById('inputName');
+    const inputPhone = document.getElementById('inputPhone');
+    const inputEmail = document.getElementById('inputEmail');
+    const btnSaveProfile = document.getElementById('btnSaveProfile');
+    
+    const reportsList = document.getElementById('reportsList');
+    
+    // Navigation & Tabs
+    const navItems = document.querySelectorAll('.sidebar-nav .nav-item[data-target]');
+    const contentCards = document.querySelectorAll('.content-card');
+    const btnBack = document.getElementById('btnBack');
+    const headerBack = document.getElementById('headerBack');
+    
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebarNav = document.getElementById('sidebarNav');
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    // --- State ---
+    let profileData = JSON.parse(localStorage.getItem('userProfile')) || {
+        name: 'Công dân Tiến Thắng',
+        phone: '',
+        email: '',
+        avatar: 'https://via.placeholder.com/150'
+    };
+    
+    let reports = JSON.parse(localStorage.getItem('reports')) || [];
+
+    // --- Init ---
+    function init() {
+        // Load profile data into inputs
+        inputName.value = profileData.name;
+        inputPhone.value = profileData.phone;
+        inputEmail.value = profileData.email;
+        profileAvatar.src = profileData.avatar;
+        
+        // Update sidebar
+        sidebarName.textContent = profileData.name || 'Công dân Tiến Thắng';
+        sidebarAvatar.src = profileData.avatar;
+
+        renderReports();
+    }
+
+    // --- Tab Switching ---
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Remove active from all nav items
+            navItems.forEach(nav => nav.classList.remove('active'));
+            // Hide all content cards
+            contentCards.forEach(card => {
+                card.classList.remove('active-tab');
+                card.classList.add('hidden-tab');
+            });
+            
+            // Add active to clicked nav
+            item.classList.add('active');
+            // Show targeted card
+            const targetId = item.getAttribute('data-target');
+            const targetCard = document.getElementById(targetId);
+            if(targetCard) {
+                targetCard.classList.remove('hidden-tab');
+                targetCard.classList.add('active-tab');
+            }
+            
+            // Close mobile menu if open
+            sidebarNav.classList.remove('show');
+        });
+    });
 
     // --- Navigation ---
     btnBack.addEventListener('click', () => {
         window.location.href = 'map.html';
     });
+    headerBack.addEventListener('click', () => {
+        window.location.href = 'map.html';
+    });
+
+    // Mobile Menu Toggle
+    mobileMenuBtn.addEventListener('click', () => {
+        sidebarNav.classList.toggle('show');
+    });
 
     // --- Profile Management ---
-    function loadProfile() {
-        const name = localStorage.getItem('user_name') || '';
-        const phone = localStorage.getItem('user_phone') || '';
-        const avatar = localStorage.getItem('user_avatar');
+    btnUploadAvatar.addEventListener('click', () => {
+        avatarInput.click();
+    });
 
-        inputName.value = name;
-        inputPhone.value = phone;
-        if (avatar) {
-            imgAvatar.src = avatar;
-        }
-    }
-
-    uploadAvatar.addEventListener('change', (e) => {
+    avatarInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
-                imgAvatar.src = event.target.result;
+                const base64Str = event.target.result;
+                profileAvatar.src = base64Str;
+                profileData.avatar = base64Str;
             };
             reader.readAsDataURL(file);
         }
     });
 
-    btnSave.addEventListener('click', () => {
-        const name = inputName.value.trim();
-        const phone = inputPhone.value.trim();
-        const avatar = imgAvatar.src;
+    btnSaveProfile.addEventListener('click', () => {
+        profileData.name = inputName.value;
+        profileData.phone = inputPhone.value;
+        profileData.email = inputEmail.value;
 
-        localStorage.setItem('user_name', name);
-        localStorage.setItem('user_phone', phone);
-        if (!avatar.includes('via.placeholder.com')) {
-            localStorage.setItem('user_avatar', avatar);
-        }
-
-        // Show feedback
-        const originalText = btnSave.textContent;
-        btnSave.textContent = 'Đã lưu thành công!';
-        btnSave.style.backgroundColor = 'var(--primary)';
-        btnSave.style.color = '#000';
+        localStorage.setItem('userProfile', JSON.stringify(profileData));
         
-        setTimeout(() => {
-            btnSave.textContent = originalText;
-            btnSave.style.backgroundColor = '';
-            btnSave.style.color = '';
-        }, 2000);
+        // Update sidebar
+        sidebarName.textContent = profileData.name || 'Công dân Tiến Thắng';
+        sidebarAvatar.src = profileData.avatar;
+
+        alert('Lưu thông tin thành công!');
     });
 
-    // --- My Reports ---
-    function loadReports() {
-        // Load all reports from local storage (assuming they belong to this device)
-        const reportsRaw = localStorage.getItem('reports');
-        let reports = [];
-        try {
-            reports = reportsRaw ? JSON.parse(reportsRaw) : [];
-        } catch(e) {
-            console.error("Lỗi khi đọc báo cáo:", e);
-        }
+    // --- Reports Rendering ---
+    function renderReports() {
+        reportsList.innerHTML = '';
 
         if (reports.length === 0) {
-            reportsList.innerHTML = '<p class="empty-state">Bạn chưa có báo cáo nào.</p>';
+            reportsList.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 2rem;">Bạn chưa có báo cáo nào.</div>`;
             return;
         }
 
-        reportsList.innerHTML = '';
-        
-        // Sort newest first
-        reports.sort((a, b) => b.timestamp - a.timestamp);
+        reports.forEach((report) => {
+            const date = new Date(report.timestamp).toLocaleDateString('vi-VN');
+            const isResolved = report.status === 'resolved';
+            const statusColor = isResolved ? '#2E7D32' : '#F57F17'; // Green or Yellowish
+            const statusText = isResolved ? 'Đã khắc phục' : 'Đang xử lý';
 
-        reports.forEach(report => {
-            const date = new Date(report.timestamp);
-            const dateString = date.toLocaleDateString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
-            
             const card = document.createElement('div');
-            card.className = 'report-item glass-panel';
-            
-            // Image handling (multiple or single)
-            let imageHtml = '';
-            let imagesArray = [];
-            
-            if (report.images && report.images.length > 0) {
-                imagesArray = report.images;
-                imageHtml = `<div class="report-item-img" style="background-image: url('${report.images[0]}')">
-                                ${report.images.length > 1 ? `<span class="img-count">+${report.images.length - 1}</span>` : ''}
-                             </div>`;
-            } else if (report.image) {
-                imagesArray = [report.image];
-                imageHtml = `<div class="report-item-img" style="background-image: url('${report.image}')"></div>`;
+            card.className = 'doc-card';
+
+            let imgHTML = '';
+            if (report.image) {
+                imgHTML = `<img src="${report.image}" class="doc-img" alt="Report Image" onclick="openLightbox('${report.image}')">`;
             } else {
-                imageHtml = `<div class="report-item-img empty-img">Không ảnh</div>`;
+                imgHTML = `<div class="doc-empty">Không có ảnh</div>`;
             }
 
             card.innerHTML = `
-                ${imageHtml}
-                <div class="report-item-content">
-                    <div class="report-item-header">
-                        <span class="report-date">${dateString}</span>
-                        <span class="report-status status-pending">Đã ghi nhận</span>
-                    </div>
-                    <p class="report-desc">${report.description || 'Không có mô tả'}</p>
-                    <div class="report-meta">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>${report.lng.toFixed(5)}, ${report.lat.toFixed(5)}</span>
-                    </div>
+                ${imgHTML}
+                <div class="doc-info">
+                    <span class="doc-name" title="${report.desc}">${report.desc}</span>
+                    <span class="doc-meta" style="border-color: ${statusColor}; color: ${statusColor};">${statusText}</span>
+                </div>
+                <div class="doc-actions">
+                    <span style="font-size: 0.8rem; color: #888;">${date}</span>
+                    <button class="btn-pill btn-destructive" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="deleteReport(${report.id})">Xóa</button>
                 </div>
             `;
-            
-            // Add click event for image to open lightbox
-            const imgDiv = card.querySelector('.report-item-img');
-            if (imagesArray.length > 0) {
-                imgDiv.style.cursor = 'pointer';
-                imgDiv.addEventListener('click', () => {
-                    openLightbox(imagesArray, 0);
-                });
-            }
-
             reportsList.appendChild(card);
         });
     }
 
-    // --- Lightbox Functions ---
-    function openLightbox(images, index) {
-        currentLightboxImages = images;
-        currentImageIndex = index;
-        updateLightboxImage();
-        
-        lightboxModal.classList.remove('hidden');
-        
-        if (images.length > 1) {
-            lightboxPrev.style.display = 'block';
-            lightboxNext.style.display = 'block';
-            lightboxCounter.style.display = 'block';
-        } else {
-            lightboxPrev.style.display = 'none';
-            lightboxNext.style.display = 'none';
-            lightboxCounter.style.display = 'none';
+    // Expose delete func to global scope for inline onclick
+    window.deleteReport = function(id) {
+        if(confirm('Bạn có chắc chắn muốn xóa báo cáo này?')) {
+            reports = reports.filter(r => r.id !== id);
+            localStorage.setItem('reports', JSON.stringify(reports));
+            renderReports();
         }
     }
 
-    function updateLightboxImage() {
-        lightboxImg.src = currentLightboxImages[currentImageIndex];
-        lightboxCounter.textContent = `${currentImageIndex + 1} / ${currentLightboxImages.length}`;
-    }
+    // --- Lightbox Logic ---
+    window.openLightbox = function(src) {
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+    };
 
-    function closeLightbox() {
-        lightboxModal.classList.add('hidden');
-    }
-
-    lightboxClose.addEventListener('click', closeLightbox);
-    
-    lightboxPrev.addEventListener('click', () => {
-        currentImageIndex = (currentImageIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
-        updateLightboxImage();
+    lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
     });
 
-    lightboxNext.addEventListener('click', () => {
-        currentImageIndex = (currentImageIndex + 1) % currentLightboxImages.length;
-        updateLightboxImage();
-    });
-
-    // Close on background click
-    lightboxModal.addEventListener('click', (e) => {
-        if (e.target === lightboxModal) {
-            closeLightbox();
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
         }
     });
 
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (!lightboxModal.classList.contains('hidden')) {
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') lightboxPrev.click();
-            if (e.key === 'ArrowRight') lightboxNext.click();
-        }
-    });
-
-    // Init
-    loadProfile();
-    loadReports();
+    init();
 });
