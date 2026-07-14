@@ -188,6 +188,47 @@ document.addEventListener('DOMContentLoaded', () => {
         mapControlsPanel.classList.toggle('collapsed');
     });
 
+    // ─── Sidebar Open / Close ─────────────────────────────
+    const sidebar = document.getElementById('sidebar');
+    const btnOpenSidebar = document.getElementById('btn-open-sidebar');
+    const btnCloseSidebar = document.getElementById('btn-close-sidebar');
+
+    // Create backdrop element dynamically
+    const backdrop = document.createElement('div');
+    backdrop.className = 'sidebar-backdrop';
+    document.body.appendChild(backdrop);
+
+    function openSidebar() {
+        sidebar.classList.remove('sidebar-hidden');
+        btnOpenSidebar.style.display = 'none';
+        // Only show backdrop on mobile
+        if (window.innerWidth <= 768) {
+            backdrop.style.display = 'block';
+            setTimeout(() => backdrop.classList.add('visible'), 10);
+        }
+    }
+
+    function closeSidebar() {
+        sidebar.classList.add('sidebar-hidden');
+        btnOpenSidebar.style.display = '';
+        backdrop.classList.remove('visible');
+        setTimeout(() => { backdrop.style.display = 'none'; }, 300);
+    }
+
+    btnOpenSidebar.addEventListener('click', openSidebar);
+    btnCloseSidebar.addEventListener('click', closeSidebar);
+    backdrop.addEventListener('click', closeSidebar);
+
+    // On desktop: sidebar is always visible, hide close/open on resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove('sidebar-hidden');
+            btnOpenSidebar.style.display = 'none';
+            backdrop.style.display = 'none';
+            backdrop.classList.remove('visible');
+        }
+    });
+
     // Style switcher buttons
     const styleBtns = document.querySelectorAll('.style-btn');
     styleBtns.forEach(btn => {

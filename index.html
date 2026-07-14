@@ -20,10 +20,15 @@
 <body>
     <div id="app-container">
         <!-- Sidebar / Floating Panel -->
-        <aside class="sidebar glass-panel">
+        <aside class="sidebar glass-panel" id="sidebar">
             <div class="sidebar-header">
-                <div class="logo-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <div class="sidebar-header-top">
+                    <div class="logo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <button id="btn-close-sidebar" class="btn-close-sidebar" aria-label="Đóng menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                 </div>
                 <h1>Xã Tiến Thắng</h1>
                 <p class="subtitle">Mê Linh, Hà Nội</p>
@@ -47,6 +52,11 @@
                 <p>Green Map Vietnam © 2026</p>
             </div>
         </aside>
+
+        <!-- Sidebar Toggle Button (always visible) -->
+        <button id="btn-open-sidebar" class="btn-open-sidebar glass-panel" aria-label="Mở menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
 
         <!-- Map Container -->
         <main class="map-wrapper">
