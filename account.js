@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         name: 'Công dân Tiến Thắng',
         phone: '',
         email: '',
-        avatar: 'https://via.placeholder.com/150'
+        avatar: 'ava.jpg'
     };
     
     let reports = JSON.parse(localStorage.getItem('reports')) || [];
