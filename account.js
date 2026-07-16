@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         reports.forEach((report) => {
-            const date = new Date(report.timestamp).toLocaleDateString('vi-VN');
+            const date = report.timeString || new Date(report.timestamp || Date.now()).toLocaleDateString('vi-VN');
             const isResolved = report.status === 'resolved';
             const statusColor = isResolved ? '#2E7D32' : '#F57F17'; // Green or Yellowish
             const statusText = isResolved ? 'Đã khắc phục' : 'Đang xử lý';
@@ -157,18 +157,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'doc-card';
 
+            const imageUrl = (report.images && report.images.length > 0) ? report.images[0] : report.image;
+            const desc = report.descText || report.desc || 'Không có mô tả';
+
             let imgHTML = '';
-            if (report.image) {
-                imgHTML = `<img src="${report.image}" class="doc-img" alt="Report Image" onclick="openLightbox('${report.image}')">`;
+            if (imageUrl) {
+                imgHTML = `<img src="${imageUrl}" class="doc-img" alt="Report Image" onclick="openLightbox('${imageUrl}')">`;
             } else {
                 imgHTML = `<div class="doc-empty">Không có ảnh</div>`;
+            }
+
+            let adminCommentHtml = '';
+            if (report.adminComment) {
+                adminCommentHtml = `
+                    <div style="background: rgba(245, 158, 11, 0.1); border-left: 3px solid #F59E0B; padding: 8px; margin-top: 10px; font-size: 0.85rem; border-radius: 0 4px 4px 0;">
+                        <strong style="color: #F59E0B; display: block; margin-bottom: 2px;">👨‍💼 Phản hồi từ Admin:</strong>
+                        ${report.adminComment}
+                    </div>
+                `;
             }
 
             card.innerHTML = `
                 ${imgHTML}
                 <div class="doc-info">
-                    <span class="doc-name" title="${report.desc}">${report.desc}</span>
+                    <span class="doc-name" title="${desc}">${desc}</span>
                     <span class="doc-meta" style="border-color: ${statusColor}; color: ${statusColor};">${statusText}</span>
+                    ${adminCommentHtml}
                 </div>
                 <div class="doc-actions">
                     <span style="font-size: 0.8rem; color: #888;">${date}</span>

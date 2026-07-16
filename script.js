@@ -635,18 +635,62 @@ document.addEventListener('DOMContentLoaded', () => {
             imagesHtml += `</div>`;
         }
 
+        const isAdmin = currentUser && currentUser.role === 'admin';
+        
+        let adminCommentHtml = '';
+        if (report.adminComment) {
+            adminCommentHtml = `
+                <div style="background: rgba(245, 158, 11, 0.1); border-left: 3px solid #F59E0B; padding: 8px; margin-top: 10px; font-size: 0.85rem; border-radius: 0 4px 4px 0; color: white;">
+                    <strong style="color: #F59E0B; display: block; margin-bottom: 2px;">👨‍💼 Phản hồi từ Admin:</strong>
+                    ${report.adminComment}
+                </div>
+            `;
+        }
+
+        let adminButtonHtml = '';
+        if (isAdmin) {
+            adminButtonHtml = `<button class="btn-sm btn-outline" style="border-color: #F59E0B; color: #F59E0B; margin-right: 4px;" onclick="window.commentReport('${report.id}')">💬 Nhận xét</button>`;
+        }
+
         return `
             <div class="report-popup" id="popup-${report.id}">
                 ${imagesHtml}
                 <p>${report.descText}</p>
                 <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">Báo cáo lúc: ${report.timeString}</p>
-                <div style="display:flex; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                ${adminCommentHtml}
+                <div style="display:flex; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;">
+                    ${adminButtonHtml}
                     <button class="btn-sm btn-edit" onclick="window.editReport('${report.id}')">Chỉnh sửa</button>
                     <button class="btn-sm btn-delete" onclick="window.deleteReport('${report.id}')">Xóa</button>
                 </div>
             </div>
         `;
     }
+
+    // Comment Report (Admin only)
+    window.commentReport = function(reportId) {
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Chỉ Admin mới có quyền nhận xét!');
+            return;
+        }
+        
+        const report = reports.find(r => r.id === reportId);
+        if (!report) return;
+
+        const currentComment = report.adminComment || '';
+        const newComment = prompt('Nhập nhận xét của Admin cho báo cáo này:', currentComment);
+        
+        if (newComment !== null) {
+            report.adminComment = newComment.trim();
+            saveReports();
+            
+            // Re-render popup if it's currently open
+            if (report.marker.getPopup().isOpen()) {
+                report.marker.getPopup().setHTML(renderPopupContent(report));
+            }
+            alert('Đã cập nhật nhận xét thành công!');
+        }
+    };
 
     // Lightbox Functions
     window.openLightbox = function(reportId, startIndex) {
