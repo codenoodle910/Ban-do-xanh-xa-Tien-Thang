@@ -314,10 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const dataToSave = reports.map(r => ({
             id: r.id,
             location: r.location,
-            desc: r.desc,
+            descText: r.descText,
+            timeString: r.timeString,
             images: r.images,
+            adminComment: r.adminComment,
+            // Fallbacks for older data if they exist
+            desc: r.desc,
             status: r.status,
-            date: r.date
+            date: r.date,
+            timestamp: r.timestamp
         }));
         localStorage.setItem('reports', JSON.stringify(dataToSave));
     }
@@ -1003,6 +1008,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create custom marker element
             const el = document.createElement('div');
             el.className = 'custom-marker';
+            const svgIcon = `
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 7 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8z" fill="var(--danger)"/>
+                    <circle cx="12" cy="8" r="3" fill="white"/>
+                </svg>`;
+            el.innerHTML = svgIcon;
 
             // Create popup
             const popup = new mapboxgl.Popup({ offset: 25, className: 'custom-report-popup' })
