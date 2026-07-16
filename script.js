@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentLightboxImages = report.images;
         currentLightboxIndex = startIndex;
         updateLightboxView();
-        lightboxModal.classList.remove('hidden');
+        lightboxModal.classList.add('active');
     };
 
     function updateLightboxView() {
@@ -674,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     lightboxClose.addEventListener('click', () => {
-        lightboxModal.classList.add('hidden');
+        lightboxModal.classList.remove('active');
     });
     
     lightboxPrev.addEventListener('click', (e) => {
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     lightboxModal.addEventListener('click', (e) => {
         if (e.target === lightboxModal) {
-            lightboxModal.classList.add('hidden');
+            lightboxModal.classList.remove('active');
         }
     });
 
