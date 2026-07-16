@@ -895,12 +895,27 @@ body {
 
 .lightbox-close {
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 50%;
     color: white;
-    font-size: 3rem;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    font-weight: 300;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.lightbox-close:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.1);
 }
 
 /* ==========================================================================
@@ -1212,19 +1227,28 @@ textarea:focus { outline: none; border-color: var(--primary); }
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.5);
     color: white;
     border: none;
-    font-size: 2rem;
-    padding: 1rem;
+    font-size: 1.5rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     border-radius: 50%;
     backdrop-filter: blur(4px);
+    transition: all 0.2s;
+    z-index: 10;
 }
-.lightbox-nav:hover { background: rgba(255,255,255,0.4); }
+.lightbox-nav:hover { 
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-50%) scale(1.1);
+}
 .lightbox-prev { left: 2rem; }
 .lightbox-next { right: 2rem; }
-.lightbox-counter { position: absolute; bottom: 2rem; color: white; font-weight: 600; }
+.lightbox-counter { position: absolute; bottom: 2rem; color: white; font-weight: 600; font-size: 1.2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
 /* ==========================================================================
    RESPONSIVE DESIGN
